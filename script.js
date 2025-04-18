@@ -1,74 +1,65 @@
-// --- Burger menu ---
-var burger   = document.getElementById('burger');
-var navLinks = document.getElementById('nav-links');
-if (burger && navLinks) {
-  burger.addEventListener('click', function() {
-    navLinks.classList.toggle('active');
-  });
-}
+;(function() {
+  // Log de chargement
+  console.log('✅ script.js chargé et exécuté');
 
-// --- Chargement des frames au clic ---
-var frameItems = document.querySelectorAll('.frame-item');
-for (var i = 0; i < frameItems.length; i++) {
-  (function(item) {
-    item.addEventListener('click', function() {
-      var url = item.getAttribute('data-url');
-      if (!url) return;
-      var container = item.querySelector('.inside-border');
-      if (container) {
-        container.innerHTML =
-          '<iframe src="' + url +
-          '" width="100%" height="100%" frameborder="0" allowfullscreen style="display:block;"></iframe>';
-      }
-    });
-  })(frameItems[i]);
-}
-
-// --- Proxy Modash & extraction des stats ---
-window.addEventListener('load', function() {
+  // Récupération des éléments
   var btn    = document.getElementById('check');
   var inp    = document.getElementById('username');
   var out    = document.getElementById('results');
   var worker = 'https://test.jeanbienso.workers.dev';
 
-  if (!btn || !inp || !out) return;
+  if (!btn || !inp || !out) {
+    console.error('❌ Un ou plusieurs éléments manquent :', { btn, inp, out });
+    return;
+  }
 
+  // Gestion du clic sur “Vérifier”
   btn.addEventListener('click', function() {
     var user = inp.value.replace(/^@/, '').trim();
+    console.log('🔘 Bouton cliqué, username :', user);
+
     if (!user) {
       out.innerHTML = '<p class="error">Veuillez saisir un nom d’influenceur.</p>';
       return;
     }
+
     out.innerHTML = '<p>Chargement…</p>';
 
-    // Construire l’URL Modash + proxy
-    var modashUrl =
-      'https://www.modash.io/engagement-rate-calculator?influencer=%40'
+    // Construction de l’URL Modash + proxy
+    var modashUrl = 
+      'https://www.modash.io/engagement-rate-calculator?influencer=%40' 
       + encodeURIComponent(user);
     var proxyUrl = worker + '?url=' + encodeURIComponent(modashUrl);
 
-    // Requête XHR simple
+    console.log('📡 Appel proxy vers :', proxyUrl);
+
+    // XHR pour éviter le fetch bloqué
     var xhr = new XMLHttpRequest();
     xhr.open('GET', proxyUrl, true);
     xhr.onreadystatechange = function() {
       if (xhr.readyState !== 4) return;
+
+      console.log('⏱️ XHR terminé, status :', xhr.status);
       if (xhr.status === 200) {
-        // Parse HTML renvoyé
+        // Parsing du HTML retourné
         var parser = new DOMParser();
         var doc    = parser.parseFromString(xhr.responseText, 'text/html');
+        console.log('🔍 HTML brut reçu :', doc);
 
         // Clés à extraire
         var keys = [
-          'Engagement rate',
-          'Average comments',
-          'Average likes',
+          'Engagement rate', 
+          'Average comments', 
+          'Average likes', 
           'Average Reel plays'
         ];
         var html = '';
-        // Récupération des cartes
         var cards = doc.querySelectorAll("div[class*='_cardName']");
-        for (var k = 0; k < keys.length; k++) {
-          var key   = keys[k];
+        console.log('📦 Nombre de cartes trouvées :', cards.length);
+
+        // Extraction des valeurs
+        for (var i = 0; i < keys.length; i++) {
+          var key   = keys[i];
           var value = '–';
           for (var j = 0; j < cards.length; j++) {
             if (cards[j].textContent.trim() === key) {
@@ -81,11 +72,21 @@ window.addEventListener('load', function() {
           }
           html += '<p>' + key + ' : ' + value + '</p>';
         }
+
+        console.log('✅ Stats extraites :', html);
         out.innerHTML = html;
+
       } else {
-        out.innerHTML = '<p class="error">Erreur : ' + xhr.status + '</p>';
+        out.innerHTML = '<p class="error">Erreur lors du chargement (code : ' 
+                        + xhr.status + ')</p>';
       }
     };
+
+    xhr.onerror = function() {
+      console.error('❌ Erreur réseau avec XHR');
+      out.innerHTML = '<p class="error">Erreur réseau</p>';
+    };
+
     xhr.send();
   });
-});
+})();
