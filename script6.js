@@ -1,4 +1,5 @@
-     // script.js
+// script.js
+// → charger avec <script type="module" src="script.js"></script>
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 
 const SUPABASE_URL = 'https://zfhymdqdybuitsrzjmrb.supabase.co';
@@ -19,8 +20,6 @@ if (!btn || !inp || !out) {
 
 btn.addEventListener('click', async () => {
   const user = inp.value.replace(/^@/, '').trim();
-  console.log('🔘 Bouton cliqué, user =', user);
-
   if (!user) {
     out.innerHTML = '<p class="error">Veuillez saisir un nom d’influenceur.</p>';
     return;
@@ -28,43 +27,104 @@ btn.addEventListener('click', async () => {
 
   out.innerHTML = '<p>Chargement…</p>';
 
-  // Requête Supabase
+  // → on récupère profile pic + persona + data
   const { data, error } = await supabase
     .from('USERS')
-    .select('CUSTOMER_PERSONA')
+    .select('PROFILE_PICTURE,CUSTOMER_PERSONA,INFLUENCER_DATA')
     .eq('INSTAGRAM', user)
     .single();
 
   if (error) {
-    console.error('❌ Erreur Supabase', error);
-    out.innerHTML = `<p class="error">Erreur : ${error.message}</p>`;
+    const msg = error.message.includes('JSON object requested')
+      ? 'Oups, les data de cet influenceur ne sont pas encore disponibles, revenez prochainement.'
+      : `Erreur : ${error.message}`;
+    out.innerHTML = `<p class="error">${msg}</p>`;
     return;
   }
-  if (!data || !data.CUSTOMER_PERSONA) {
+  if (!data) {
     out.innerHTML = `<p class="error">Aucune donnée trouvée pour @${user}</p>`;
     return;
   }
 
+  const pic     = data.PROFILE_PICTURE;
   const persona = data.CUSTOMER_PERSONA;
+  const info    = data.INFLUENCER_DATA;
 
-  // Construction du HTML de présentation
-  let html = `
-    <p><strong>Âge</strong> : ${persona.AGE}</p>
-    <p><strong>Genre</strong> : ${persona.GENDER}</p>
-    <p><strong>Catégories</strong> :</p>
-    <ul>
-      ${persona.CATEGORY.map(cat => `<li>${cat}</li>`).join('')}
-    </ul>
-    <p><strong>Localisation</strong> : ${persona.LOCATION}</p>
-    <p><strong>Followers</strong> : ${persona.FOLLOWERS.toLocaleString()}</p>
-    <p><strong>Taux d’engagement</strong> : ${persona.ENGAGEMENT_RATE}%</p>
-    <p><strong>Vues estimées</strong> : ${persona.ESTIMATED_VIEWS}</p>
-    <p><strong>Coordonnées GPS</strong> :
-      ${persona.LOCATION_COORDINATES
-        .map(coord => `${coord[0].toFixed(6)}, ${coord[1].toFixed(6)}`)
-        .join(' ; ')}
-    </p>
+  // → construction de la carte bento
+  out.innerHTML = `
+  <div style="
+      display: flex;
+      align-items: center;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      padding: 16px;
+      max-width: 600px;
+    ">
+    <img
+      src="${pic}"
+      alt="${user}"
+      style="
+        width: 96px;
+        height: 96px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 16px;
+      "
+    />
+    <div style="flex: 1;">
+      <div style="display: flex; gap: 12px; margin-bottom: 12px;">
+        <div style="
+            flex:1;
+            background: #f9f9f9;
+            border-radius: 8px;
+            padding: 12px;
+            text-align:center;
+          ">
+          <div style="font-size: 13px; color: #666;">Followers</div>
+          <div style="font-size: 18px; font-weight: bold;">
+            ${persona.FOLLOWERS.toLocaleString()}
+          </div>
+        </div>
+        <div style="
+            flex:1;
+            background: #f9f9f9;
+            border-radius: 8px;
+            padding: 12px;
+            text-align:center;
+          ">
+          <div style="font-size: 13px; color: #666;">Engagement</div>
+          <div style="font-size: 18px; font-weight: bold;">
+            ${persona.ENGAGEMENT_RATE}%
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom: 12px;">
+        <div style="font-size: 13px; color: #666; margin-bottom: 4px;">Catégories</div>
+        ${
+          Array.isArray(persona.CATEGORY) && persona.CATEGORY.length
+            ? persona.CATEGORY
+                .map(cat => `
+                  <span style="
+                    display:inline-block;
+                    background:#e0f7fa;
+                    color:#00796b;
+                    border-radius:12px;
+                    padding:4px 8px;
+                    margin:0 6px 6px 0;
+                    font-size:12px;
+                  ">${cat}</span>
+                `).join('')
+            : '<span style="font-size:12px; color:#999;">Aucune catégorie</span>'
+        }
+      </div>
+      <div>
+        <div style="font-size: 13px; color: #666; margin-bottom: 4px;">Localisation</div>
+        <div style="font-size: 15px; font-weight: 500; color: #333;">
+          ${info.location||'–'}
+        </div>
+      </div>
+    </div>
+  </div>
   `;
-
-  out.innerHTML = html;
 });
