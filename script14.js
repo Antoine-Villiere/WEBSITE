@@ -136,19 +136,6 @@
   header.textContent = 'Vérifier l’engagement';
   card.appendChild(header);
 
-  // 4. Input group
-  const inputGroup = document.createElement('div');
-  inputGroup.className = 'bento-input-group';
-  const inp = document.createElement('input');
-  inp.id = 'username';
-  inp.placeholder = 'Entrez @username';
-  const btn = document.createElement('button');
-  btn.id = 'check';
-  btn.textContent = 'Vérifier';
-  inputGroup.appendChild(inp);
-  inputGroup.appendChild(btn);
-  card.appendChild(inputGroup);
-
   // 5. Results container
   const results = document.createElement('div');
   results.id = 'results';
