@@ -15,17 +15,29 @@
         WORKER = 'https://test.jeanbienso.workers.dev'
 
   btn.addEventListener('click', async () => {
-    const user = inp.value.replace(/^@/, '').trim()
-    if (!user) {
-      out.innerHTML = '<p class="error">Veuillez saisir un nom d’influenceur.</p>'
-      return
-    }
-    out.innerHTML = '<p class="loading">Chargement…</p>'
+  const user = inp.value.replace(/^@/, '').trim();
+  if (!user) {
+    out.innerHTML = '<p class="error">Veuillez saisir un nom d’influenceur.</p>';
+    return;
+  }
+  out.innerHTML = '<p class="loading">Chargement…</p>';
 
-    try {
-      const resp = await fetch(`${WORKER}?username=${encodeURIComponent(user)}`)
-      if (!resp.ok) throw new Error(`HTTP ${resp.status}`)
-      const d = await resp.json()
+  try {
+    const resp = await fetch(`${WORKER}?username=${encodeURIComponent(user)}`);
+    // 1) Contrôle du statut
+    if (!resp.ok) {
+      // Lire le texte brut (probablement HTML) pour l’afficher ou logger
+      const errText = await resp.text();
+      throw new Error(`Erreur serveur : ${resp.status}\n${errText}`);
+    }
+    // 2) Contrôle du type de contenu
+    const contentType = resp.headers.get('Content-Type') || '';
+    if (!contentType.includes('application/json')) {
+      const text = await resp.text();
+      throw new Error(`Réponse inattendue (non JSON) : ${text.substr(0, 200)}…`);
+    }
+    // 3) Parser en JSON en toute sécurité
+    const d = await resp.json();
 
       out.innerHTML = `
         <div class="profile-header">
