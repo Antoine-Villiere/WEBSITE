@@ -1,5 +1,5 @@
 (function() {
-  // Constants
+  // Constantss
   const WORKER_URL = 'https://test.jeanbienso.workers.dev';
   const STYLE_ID = 'bento-style';
 
