@@ -1,4 +1,3 @@
-<script>
 (function(){
   // ---- Inject ultra‑modern Bento‑style CSS once ----
   const BENTO_STYLE_ID = 'bento-style';
@@ -222,4 +221,3 @@
     return card;
   }
 })();
-</script>
