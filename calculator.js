@@ -280,7 +280,7 @@
             \`<img src="\${escapeHtml(proxyUrl(url))}"
                     loading="lazy"
                     onerror="this.src='https://via.placeholder.com/80';"\`
-            + ' alt="">' 
+            + ' alt="">'
           ).join('')}
         </div>
         <button class="bento-collab-btn"
