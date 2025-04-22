@@ -20,8 +20,8 @@
   display: grid;
   grid-template-areas:
     "header"
-    "warning"
     "stats"
+    "warning"
     "feed"
     "collab";
   gap: var(--bento-gap);
@@ -34,6 +34,10 @@
   font-family: 'Segoe UI', sans-serif;
   color: var(--bento-text);
   transition: transform .3s ease;
+}
+.bento-stats .stat:last-child .value {
+  color: var(--bento-accent);
+  font-weight: 700;
 }
 .bento-card:hover { transform: translateY(-4px); }
 .bento-header { grid-area: header; display: flex; gap:1rem; align-items:center; }
@@ -173,19 +177,18 @@
             <div class="bio-header">${escapeHtml(d.biography||'—')}</div>
           </div>
         </div>
-        <div class="bento-warning">Attention : @${escapeHtml(d.username)} peut volontairement cacher ses statistiques, ce qui peut impacter les données ci-dessous.</div>
         <div class="bento-stats">
           ${stats.map(([label,value]) =>
             `<div class="stat"><span class="value">${escapeHtml(value)}</span><span class="label">${label}</span></div>`
           ).join('')}
         </div>
-        <div class="bento-feed">
+      <div class="bento-warning"><strong>Attention :</strong> @${escapeHtml(d.username)} peut volontairement cacher ses statistiques, ce qui peut impacter les données ci-dessous.</div>      <div class="bento-feed">
           ${(d.recent_posts||[]).slice(0,6).map(url=>
             `<img src="${escapeHtml(proxyUrl(url))}" loading="lazy" onerror="this.src='https://via.placeholder.com/80';" alt="">`
           ).join('')}
         </div>
         <button class="bento-collab-btn" onclick="window.open('https://www.spottedge.app','_blank')">
-          Commencer à collaborer avec @${escapeHtml(d.username)}
+          Collaborez avec @${escapeHtml(d.username)}
         </button>
       </div>
     `;
