@@ -139,4 +139,5 @@
       zone.appendChild(label);
     });
   }
+
 })();
