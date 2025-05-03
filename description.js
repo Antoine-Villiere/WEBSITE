@@ -1,13 +1,12 @@
-/* description.js – AI‑Assistant : Descriptions marketing
-   © 2025 – libre de droits
------------------------------------------------------------------- */
+/* description.js – AI‑Assistant : Descriptions marketing */
 (function () {
   const WORKER_URL      = 'https://generator.hello-6ce.workers.dev';       // ← à adapter
+  const ROOT_ID    = 'description-ai';
 
-  /* ---------- Styles ---------- */
+  /* ---------- CSS ---------- */
   const CSS = `
-#generator{font-family:Inter,system-ui;background:#fff;padding:2rem 1rem;max-width:620px;margin:2rem auto;border:1px solid #ececec;border-radius:16px;box-shadow:0 6px 18px rgba(0,0,0,.05)}
-#generator h1{margin:0 0 1.4rem;font-size:1.65rem;text-align:center;color:#133354}
+#${ROOT_ID}{font-family:Inter,system-ui;background:#fff;padding:2rem 1rem;max-width:620px;margin:2rem auto;border:1px solid #ececec;border-radius:16px;box-shadow:0 6px 18px rgba(0,0,0,.05)}
+#${ROOT_ID} h1{margin:0 0 1.4rem;font-size:1.65rem;text-align:center;color:#133354}
 label{display:block;margin-top:1rem;font-size:.9rem;color:#333}
 input,textarea{width:100%;padding:.55rem .7rem;margin-top:.35rem;border:1px solid #d0d0d0;border-radius:8px;font:inherit;resize:vertical}
 button{margin-top:1.7rem;width:100%;padding:.75rem 1.2rem;font-size:1rem;border:0;border-radius:10px;background:#0077ff;color:#fff;font-weight:600;cursor:pointer;box-shadow:0 4px 12px rgba(0,119,255,.3);transition:.2s}
@@ -20,13 +19,12 @@ button:hover{background:#0061d1}
 `;
   injectCSS(CSS);
 
-  /* ---------- UI ---------- */
-  const root = document.getElementById('generator');
-  if (!root) { console.error('#generator manquant'); return; }
+  const root = document.getElementById(ROOT_ID);
+  if (!root) { console.error(`#${ROOT_ID} manquant`); return; }
 
   root.innerHTML = `
     <h1>AI Assistant – Descriptions</h1>
-    <form id="desc-form">
+    <form id="${ROOT_ID}-form">
       <label>Nom du produit / service
         <input name="nom" required>
       </label>
@@ -38,11 +36,11 @@ button:hover{background:#0061d1}
       </label>
       <button type="submit">Générer mes 3 descriptions</button>
     </form>
-    <div id="desc-output"></div>
+    <div id="${ROOT_ID}-out"></div>
   `;
 
-  const form = document.getElementById('desc-form');
-  const out  = document.getElementById('desc-output');
+  const form = document.getElementById(`${ROOT_ID}-form`);
+  const out  = document.getElementById(`${ROOT_ID}-out`);
 
   form.addEventListener('submit', async e => {
     e.preventDefault();
@@ -72,6 +70,6 @@ button:hover{background:#0061d1}
       <div class="ai-text"><strong>AI Assistant :</strong> ${escapeHTML(text)}</div>
     </div>`;
   }
-  function injectCSS(c) { const s = document.createElement('style'); s.textContent = c; document.head.appendChild(s); }
-  function escapeHTML(str) { return str.replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+  function injectCSS(c){ const s=document.createElement('style'); s.textContent=c; document.head.appendChild(s); }
+  function escapeHTML(str){ return str.replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 })();
