@@ -112,8 +112,7 @@ button:disabled{
   }
 
   root.innerHTML = `
-    <h1>Assistant IA</h1>
-    <p class="subtitle">Générez 3 descriptions marketing accrocheuses pour vos posts en moins de 10 secondes.</p>
+    <h1>Générez 3 descriptions marketing accrocheuses pour vos posts en moins de 10 secondes.</h1>
     <form id="${ROOT_ID}-form">
       <label class="required">Quel est votre compte Instagram ?
         <input name="instagram" placeholder="@nom_du_compte" autocomplete="username" required>
