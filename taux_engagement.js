@@ -206,7 +206,7 @@
       }
       showLoading(container);
       try {
-        const res  = await fetch(\`\${WORKER_URL}?username=\${encodeURIComponent(username)}\`);
+        const res  = await fetch(`${WORKER_URL}?username=${encodeURIComponent(username)}`);
         if (!res.ok) throw new Error();
         const data = await res.json();
         renderCard(container, data);
@@ -280,7 +280,7 @@
             \`<img src="\${escapeHtml(proxyUrl(url))}"
                     loading="lazy"
                     onerror="this.src='https://via.placeholder.com/80';"\`
-            + ' alt="">' 
+            + ' alt="">'
           ).join('')}
         </div>
         <button class="bento-collab-btn"
