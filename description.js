@@ -1,7 +1,8 @@
-/* description.js – AI‑Assistant : Descriptions marketing */
+/* description.js – AI‑Assistant : Descriptions marketing (v2) */
 (function () {
-  const WORKER_URL      = 'https://generator.hello-6ce.workers.dev';       // ← à adapter
-  const ROOT_ID    = 'description-ai';
+  const WORKER_URL   = 'https://generator.hello-6ce.workers.dev';  // ← adapte
+  const ROOT_ID      = 'description-ai';
+  const SIGNUP_URL   = 'https://www.spottedge.app';
 
   /* ---------- CSS ---------- */
   const CSS = `
@@ -19,12 +20,16 @@ button:hover{background:#0061d1}
 `;
   injectCSS(CSS);
 
+  /* ---------- UI ---------- */
   const root = document.getElementById(ROOT_ID);
   if (!root) { console.error(`#${ROOT_ID} manquant`); return; }
 
   root.innerHTML = `
     <h1>AI Assistant – Descriptions</h1>
     <form id="${ROOT_ID}-form">
+      <label>Compte Instagram (obligatoire)
+        <input name="instagram" placeholder="@votre_compte" required>
+      </label>
       <label>Nom du produit / service
         <input name="nom" required>
       </label>
@@ -34,12 +39,13 @@ button:hover{background:#0061d1}
       <label>URL site (optionnel)
         <input name="site">
       </label>
-      <button type="submit">Générer mes 3 descriptions</button>
+      <button id="${ROOT_ID}-btn" type="submit">Générer mes 3 descriptions</button>
     </form>
     <div id="${ROOT_ID}-out"></div>
   `;
 
   const form = document.getElementById(`${ROOT_ID}-form`);
+  const btn  = document.getElementById(`${ROOT_ID}-btn`);
   const out  = document.getElementById(`${ROOT_ID}-out`);
 
   form.addEventListener('submit', async e => {
@@ -48,6 +54,8 @@ button:hover{background:#0061d1}
     new FormData(form).forEach((v, k) => { if (v.trim()) payload[k] = v.trim(); });
 
     out.innerHTML = '<p class="loader">⏳ Génération…</p>';
+    btn.disabled  = true;
+
     try {
       const res = await fetch(`${WORKER_URL}/generate`, {
         method: 'POST',
@@ -57,8 +65,16 @@ button:hover{background:#0061d1}
       if (!res.ok) throw new Error('HTTP ' + res.status);
       const { result } = await res.json();
       out.innerHTML = result.map(txt => aiCard(txt)).join('');
+
+      /* --- transformation du bouton --- */
+      btn.textContent = 'S’inscrire gratuitement';
+      btn.disabled    = false;
+      btn.type        = 'button';
+      btn.onclick     = () => window.open(SIGNUP_URL, '_blank');
+
     } catch (err) {
       out.innerHTML = `<p class="error">Erreur : ${err.message}</p>`;
+      btn.disabled  = false;
     }
   });
 
@@ -71,5 +87,5 @@ button:hover{background:#0061d1}
     </div>`;
   }
   function injectCSS(c){ const s=document.createElement('style'); s.textContent=c; document.head.appendChild(s); }
-  function escapeHTML(str){ return str.replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+  function escapeHTML(str){ return str.replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 })();
