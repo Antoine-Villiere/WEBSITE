@@ -49,9 +49,9 @@ for (var i = 0; i < frameItems.length; i++) {
 }
 </script>
 <script src="https://cdn.jsdelivr.net/gh/Antoine-Villiere/WEBSITE@main/taux_engagement.js" defer></script>
-<script src="https://cdn.jsdelivr.net/gh/Antoine-Villiere/WEBSITE@main/description.js" defer></script>
-<script src="https://cdn.jsdelivr.net/gh/Antoine-Villiere/WEBSITE@main/hooks.js" defer></script>
-<script src="https://cdn.jsdelivr.net/gh/Antoine-Villiere/WEBSITE@main/ugc.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/Antoine-Villiere/WEBSITE@main/idee-description.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/Antoine-Villiere/WEBSITE@main/idee-hooks.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/Antoine-Villiere/WEBSITE@main/idee-ugc.js" defer></script>
 <script>
   (function() {
     const btn       = document.getElementById('sticky-button');
