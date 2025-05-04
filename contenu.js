@@ -56,14 +56,14 @@ button:disabled{opacity:.6;cursor:default;box-shadow:none}
     <h1>Quel contenu demander à votre influenceur ?</h1>
     <p class="subtitle">Renseignez quelques infos pour obtenir une recommandation instantanée.</p>
     <form id="${ROOT_ID}-form">
+    <label class="required">Quel est votre compte Instagram ?
+        <input name="instagram" placeholder="@nom_du_compte" autocomplete="username" required>
+      </label>
       <label class="required">Secteur d’activité
         <input name="secteur" placeholder="Ex. : Mode, FoodTech…" required>
       </label>
       <label class="required">Produit / service proposé
         <input name="entreprise_offer" placeholder="Ex. : Sneakers recyclées" required>
-      </label>
-      <label class="required">Compte Instagram
-        <input name="instagram" placeholder="@votre_compte" required>
       </label>
       <label class="required">Devise
         <select name="currency" required>

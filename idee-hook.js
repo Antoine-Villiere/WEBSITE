@@ -107,6 +107,9 @@ button:disabled{
   root.innerHTML = `
     <h1>Générez 3 hooks marketing irrésistibles en moins de 10 secondes.</h1>
     <form id="${ROOT_ID}-form">
+    <label class="required">Quel est votre compte Instagram ?
+        <input name="instagram" placeholder="@nom_du_compte" autocomplete="username" required>
+      </label>
       <label class="required">Type de produit
         <input name="type_prod" placeholder="Ex. : App de fitness" required>
       </label>
