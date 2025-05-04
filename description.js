@@ -1,7 +1,7 @@
-/* hooks.js – Assistant IA : Hooks marketing (v3 UX – cohérent description.js) */
+/* description.js – Assistant IA : Générateur de descriptions marketing (v3 UX) */
 (function () {
   const WORKER_URL = 'https://generator.hello-6ce.workers.dev';  // ← adapte
-  const ROOT_ID    = 'hooks-ai';
+  const ROOT_ID    = 'description-ai';
   const SIGNUP_URL = 'https://www.spottedge.app';
 
   /* ---------- THEME ---------- */
@@ -40,41 +40,28 @@ label.required::after{
   color:#dc2626;
   margin-left:2px;
 }
-input{
+input,textarea{
   width:100%;
   padding:.6rem .75rem;
   margin-top:.4rem;
   border:1px solid #d1d5db;
   border-radius:10px;
   font:inherit;
+  resize:vertical;
   transition:border-color .2s,box-shadow .2s;
 }
-input:focus{
+input:focus,textarea:focus{
   border-color:#005f73;
   box-shadow:0 0 0 3px rgba(59,130,246,.2);
   outline:none;
 }
-button{
-  margin-top:2rem;
-  width:100%;
-  padding:.85rem 1.2rem;
-  font-size:1.05rem;
-  border:0;
-  border-radius:12px;
-  background:#005f73;
-  color:#ffffff;
-  font-weight:600;
-  cursor:pointer;
-  box-shadow:0 4px 14px rgba(59,130,246,.35);
-  transition:background .2s,transform .15s;
+textarea{
+  min-height:96px;
 }
+button{margin-top:2rem;width:100%;padding:.85rem 1.2rem;font-size:1.05rem;border:0;border-radius:12px;background:#005f73;color:#fff;font-weight:600;cursor:pointer;box-shadow:0 4px 14px rgba(59,130,246,.35);transition:background .2s,transform .15s}
 button:hover{background:#0a9396}
 button:active{transform:translateY(1px)}
-button:disabled{
-  opacity:.6;
-  cursor:default;
-  box-shadow:none;
-}
+button:disabled{opacity:.6;cursor:default;box-shadow:none}
 .ai-card{
   margin-top:1.6rem;
   padding:1.25rem 1rem;
@@ -102,33 +89,27 @@ button:disabled{
 
   /* ---------- UI ---------- */
   const root = document.getElementById(ROOT_ID);
-  if (!root) { console.error(`#${ROOT_ID} introuvable`); return; }
+  if (!root) {
+    console.error(`#${ROOT_ID} introuvable`);
+    return;
+  }
 
   root.innerHTML = `
-    <h1>Générez 3 hooks marketing irrésistibles en moins de 10 secondes.</h1>
+    <h1>Générez 3 descriptions marketing accrocheuses pour vos posts en moins de 10 secondes.</h1>
     <form id="${ROOT_ID}-form">
-    <label class="required">Quel est votre compte Instagram ?
+      <label class="required">Quel est votre compte Instagram ?
         <input name="instagram" placeholder="@nom_du_compte" autocomplete="username" required>
       </label>
-      <label class="required">Type de produit
-        <input name="type_prod" placeholder="Ex. : App de fitness" required>
+      <label class="required">Quel est le nom de votre produit ou service ?
+        <input name="nom" placeholder="Ex. : Sneakers FlyLight X" required>
       </label>
-      <label class="required">Nom du produit
-        <input name="nom" placeholder="Ex. : FitTrack Coach" required>
-      </label>
-      <label class="required">Audience cible
-        <input name="audience" placeholder="Ex. : Femmes 25‑35 actives" required>
-      </label>
-      <label class="required">Problème principal à résoudre
-        <input name="probleme" placeholder="Ex. : Manque de motivation pour faire du sport" required>
-      </label>
-      <label class="required">Tonalité souhaitée
-        <input name="tonalite" placeholder="Ex. : Inspirante et énergique" required>
+      <label class="required">Quelles sont les informations clés à mettre en avant ?
+        <textarea name="infos" placeholder="Ex. : Matériaux recyclés, livraison gratuite, promo jusqu'au 31/05…" required></textarea>
       </label>
       <label>URL de votre site (optionnel)
         <input name="site" placeholder="https://monsite.com">
       </label>
-      <button id="${ROOT_ID}-btn" type="submit">💡 Générer mes 3 hooks</button>
+      <button id="${ROOT_ID}-btn" type="submit">💡 Générer mes 3 descriptions</button>
     </form>
     <div id="${ROOT_ID}-out"></div>
   `;
@@ -136,11 +117,12 @@ button:disabled{
   const form = document.getElementById(`${ROOT_ID}-form`);
   const btn  = document.getElementById(`${ROOT_ID}-btn`);
   const out  = document.getElementById(`${ROOT_ID}-out`);
-  form.querySelector('input[name="type_prod"]').focus();
+  const firstInput = form.querySelector('input[name="instagram"]');
+  if (firstInput) firstInput.focus();
 
   form.addEventListener('submit', async evt => {
     evt.preventDefault();
-    const payload = { choice: 'hooks' };
+    const payload = { choice: 'description' };
     new FormData(form).forEach((v, k) => {
       if (typeof v === 'string' && v.trim()) payload[k] = v.trim();
     });
@@ -173,8 +155,8 @@ button:disabled{
   function aiCard(text) {
     return `
       <div class="ai-card">
-        <svg width="32" height="32" viewBox="0 0 24 24"><path d="m12 2 9 4v8l-9 4-9-4V6l9-4Zm0 2.18L5 7.06v6.88l7 3.12 7-3.12V7.06l-7-2.88ZM11 8h2v5h-2V8Zm0 6h2v2h-2v-2Z"/></svg>
-        <div class="ai-text"><strong>Hook :</strong> ${escapeHTML(text)}</div>
+        <svg width="32" height="32" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 7.09 17.09l2.41 2.41 1.5-1.5-2.41-2.41A10 10 0 0 0 12 2Zm-1 15h2v2h-2Zm2.07-4.25-.9.92A1.49 1.49 0 0 0 12 16h-1v-2h1l1.15-1.17a1.49 1.49 0 0 0 0-2.11A1.5 1.5 0 1 0 11 8h2a3.5 3.5 0 0 1 0 7Z"/></svg>
+        <div class="ai-text"><strong>Description :</strong> ${escapeHTML(text)}</div>
       </div>`;
   }
 
@@ -183,6 +165,7 @@ button:disabled{
     style.textContent = str;
     document.head.appendChild(style);
   }
+
   function escapeHTML(str) {
     return str.replace(/[&<>'"]/g, c => ({
       '&':'&amp;',

@@ -49,10 +49,10 @@ for (var i = 0; i < frameItems.length; i++) {
 }
 </script>
 <script src="https://cdn.jsdelivr.net/gh/Antoine-Villiere/WEBSITE@main/taux_engagement.js" defer></script>
-<script src="https://cdn.jsdelivr.net/gh/Antoine-Villiere/WEBSITE@main/description-contenu.js" defer></script>
-<script src="https://cdn.jsdelivr.net/gh/Antoine-Villiere/WEBSITE@main/hook-contenu.js" defer></script>
-<script src="https://cdn.jsdelivr.net/gh/Antoine-Villiere/WEBSITE@main/ugc-contenu.js" defer></script>
-<script src="https://cdn.jsdelivr.net/gh/Antoine-Villiere/WEBSITE@main/idee-content.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/Antoine-Villiere/WEBSITE@main/description.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/Antoine-Villiere/WEBSITE@main/hook.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/Antoine-Villiere/WEBSITE@main/ugc.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/Antoine-Villiere/WEBSITE@main/content.js" defer></script>
 <script src="https://cdn.jsdelivr.net/gh/Antoine-Villiere/WEBSITE@main/emailer-sender.js"></script>
 <script>
   (function() {

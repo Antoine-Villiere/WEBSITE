@@ -1,7 +1,7 @@
-/* description.js – Assistant IA : Générateur de descriptions marketing (v3 UX) */
+/* ugc.js – Assistant IA : Idées UGC (v3 UX – cohérent description.js) */
 (function () {
   const WORKER_URL = 'https://generator.hello-6ce.workers.dev';  // ← adapte
-  const ROOT_ID    = 'description-ai';
+  const ROOT_ID    = 'ugc-ai';
   const SIGNUP_URL = 'https://www.spottedge.app';
 
   /* ---------- THEME ---------- */
@@ -55,31 +55,12 @@ input:focus,textarea:focus{
   box-shadow:0 0 0 3px rgba(59,130,246,.2);
   outline:none;
 }
-textarea{
-  min-height:96px;
-}
-button{
-  margin-top:2rem;
-  width:100%;
-  padding:.85rem 1.2rem;
-  font-size:1.05rem;
-  border:0;
-  border-radius:12px;
-  background:#005f73;
-  color:#ffffff;
-  font-weight:600;
-  cursor:pointer;
-  box-shadow:0 4px 14px rgba(59,130,246,.35);
-  transition:background .2s,transform .15s;
-}
+textarea{min-height:96px}
+button{margin-top:2rem;width:100%;padding:.85rem 1.2rem;font-size:1.05rem;border:0;border-radius:12px;background:#005f73;color:#fff;font-weight:600;cursor:pointer;box-shadow:0 4px 14px rgba(59,130,246,.35);transition:background .2s,transform .15s}
 button:hover{background:#0a9396}
 button:active{transform:translateY(1px)}
-button:disabled{
-  opacity:.6;
-  cursor:default;
-  box-shadow:none;
-}
-.ai-card{
+button:disabled{opacity:.6;cursor:default;box-shadow:none}
+.idea-card{
   margin-top:1.6rem;
   padding:1.25rem 1rem;
   border-radius:14px;
@@ -88,8 +69,8 @@ button:disabled{
   gap:.9rem;
   box-shadow:0 2px 6px rgba(0,0,0,.05);
 }
-.ai-card svg{flex:0 0 32px;fill:#3b82f6}
-.ai-text{flex:1;font-size:.96rem;line-height:1.48}
+.idea-card svg{flex:0 0 32px;fill:#3b82f6}
+.idea-text{flex:1;font-size:.96rem;line-height:1.48}
 .loader,.error{
   text-align:center;
   margin-top:1.6rem;
@@ -106,27 +87,30 @@ button:disabled{
 
   /* ---------- UI ---------- */
   const root = document.getElementById(ROOT_ID);
-  if (!root) {
-    console.error(`#${ROOT_ID} introuvable`);
-    return;
-  }
+  if (!root) { console.error(`#${ROOT_ID} introuvable`); return; }
 
   root.innerHTML = `
-    <h1>Générez 3 descriptions marketing accrocheuses pour vos posts en moins de 10 secondes.</h1>
+    <h1>Générez 3 idées UGC prêtes à tourner en moins de 10 secondes.</h1>
     <form id="${ROOT_ID}-form">
-      <label class="required">Quel est votre compte Instagram ?
+    <label class="required">Quel est votre compte Instagram ?
         <input name="instagram" placeholder="@nom_du_compte" autocomplete="username" required>
       </label>
-      <label class="required">Quel est le nom de votre produit ou service ?
-        <input name="nom" placeholder="Ex. : Sneakers FlyLight X" required>
+      <label class="required">Infos clé sur la marque ou le produit
+        <textarea name="info_marque" placeholder="Ex. : Sneakers FlyLight X en matériaux recyclés" required></textarea>
       </label>
-      <label class="required">Quelles sont les informations clés à mettre en avant ?
-        <textarea name="infos" placeholder="Ex. : Matériaux recyclés, livraison gratuite, promo jusqu'au 31/05…" required></textarea>
+      <label class="required">Canal de diffusion
+        <input name="canal" placeholder="Ex. : TikTok" required>
+      </label>
+      <label class="required">Objectif marketing
+        <input name="objectif" placeholder="Ex. : Augmenter la notoriété / Générer des ventes" required>
+      </label>
+      <label>Brief créatif (optionnel)
+        <textarea name="brief_creatif" placeholder="Ex. : Vidéo dynamique en intérieur, ton humoristique…"></textarea>
       </label>
       <label>URL de votre site (optionnel)
         <input name="site" placeholder="https://monsite.com">
       </label>
-      <button id="${ROOT_ID}-btn" type="submit">💡 Générer mes 3 descriptions</button>
+      <button id="${ROOT_ID}-btn" type="submit">🎬 Générer mes 3 idées</button>
     </form>
     <div id="${ROOT_ID}-out"></div>
   `;
@@ -134,12 +118,11 @@ button:disabled{
   const form = document.getElementById(`${ROOT_ID}-form`);
   const btn  = document.getElementById(`${ROOT_ID}-btn`);
   const out  = document.getElementById(`${ROOT_ID}-out`);
-  const firstInput = form.querySelector('input[name="instagram"]');
-  if (firstInput) firstInput.focus();
+  form.querySelector('textarea[name="info_marque"]').focus();
 
   form.addEventListener('submit', async evt => {
     evt.preventDefault();
-    const payload = { choice: 'description' };
+    const payload = { choice: 'ugc' };
     new FormData(form).forEach((v, k) => {
       if (typeof v === 'string' && v.trim()) payload[k] = v.trim();
     });
@@ -155,7 +138,7 @@ button:disabled{
       });
       if (!res.ok) throw new Error('HTTP ' + res.status);
       const { result } = await res.json();
-      out.innerHTML = result.map(txt => aiCard(txt)).join('');
+      out.innerHTML = result.map((v, i) => ideaCard(v, i + 1)).join('');
 
       /* --- transformer le bouton en call‑to‑action d'inscription --- */
       btn.textContent = '🚀 Inscrivez-vous gratuitement sur Spottedge';
@@ -169,11 +152,20 @@ button:disabled{
   });
 
   /* ---------- Helpers ---------- */
-  function aiCard(text) {
+  function ideaCard(data, idx) {
+    const visuels = data['visuels clés'] || data.visuels || [];
     return `
-      <div class="ai-card">
-        <svg width="32" height="32" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 7.09 17.09l2.41 2.41 1.5-1.5-2.41-2.41A10 10 0 0 0 12 2Zm-1 15h2v2h-2Zm2.07-4.25-.9.92A1.49 1.49 0 0 0 12 16h-1v-2h1l1.15-1.17a1.49 1.49 0 0 0 0-2.11A1.5 1.5 0 1 0 11 8h2a3.5 3.5 0 0 1 0 7Z"/></svg>
-        <div class="ai-text"><strong>Description :</strong> ${escapeHTML(text)}</div>
+      <div class="idea-card">
+        <svg width="32" height="32" viewBox="0 0 24 24"><path d="M22 6.5 12 2 2 6.5v11l10 4.5 10-4.5v-11Zm-2 .92v8.53L12 20.56 4 15.95V7.42L12 3.83l8 3.59ZM7.5 12a1 1 0 0 1 1-1h7a1 1 0 1 1 0 2h-7a1 1 0 0 1-1-1Z"/></svg>
+        <div class="idea-text">
+          <strong>Idée ${idx} – Hook :</strong> ${escapeHTML(data.hook ?? '‑')}<br>
+          <strong>Scénario :</strong> ${escapeHTML(data.scénario ?? data.scenario ?? '‑')}<br>
+          <strong>Visuels clés :</strong>
+          <ul style="margin:0.3rem 0 0 1.1rem;padding:0;">
+            ${visuels.map(v => `<li>${escapeHTML(v)}</li>`).join('')}
+          </ul>
+          <strong>CTA :</strong> ${escapeHTML(data.cta ?? '‑')}
+        </div>
       </div>`;
   }
 
@@ -182,7 +174,6 @@ button:disabled{
     style.textContent = str;
     document.head.appendChild(style);
   }
-
   function escapeHTML(str) {
     return str.replace(/[&<>'"]/g, c => ({
       '&':'&amp;',
