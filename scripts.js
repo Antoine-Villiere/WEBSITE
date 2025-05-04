@@ -52,7 +52,7 @@ for (var i = 0; i < frameItems.length; i++) {
 <script src="https://cdn.jsdelivr.net/gh/Antoine-Villiere/WEBSITE@main/idee-description.js" defer></script>
 <script src="https://cdn.jsdelivr.net/gh/Antoine-Villiere/WEBSITE@main/idee-hook.js" defer></script>
 <script src="https://cdn.jsdelivr.net/gh/Antoine-Villiere/WEBSITE@main/idee-ugc.js" defer></script>
-<script src="https://cdn.jsdelivr.net/gh/Antoine-Villiere/WEBSITE@main/testUX.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/Antoine-Villiere/WEBSITE@main/temp-sdr.js" defer></script>
 <script src="https://cdn.jsdelivr.net/gh/Antoine-Villiere/WEBSITE@main/tempemail.js"></script>
 <script>
   (function() {
