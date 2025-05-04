@@ -1,4 +1,4 @@
-/* offer_request.js – Assistant IA : Contenu à demander (v1.4) */
+                                                          /* offer_request.js – Assistant IA : Contenu à demander (v1.4) */
 (function () {
   /* ---------- CONFIG ---------- */
   const ROOT_ID          = 'offer-ai';

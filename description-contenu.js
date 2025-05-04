@@ -21,7 +21,7 @@
   font-size:1.75rem;
   font-weight:700;
   text-align:center;
-  color:#102a43;
+  color:#ca6702;
 }
 #${ROOT_ID} .subtitle{
   margin:0 0 1.5rem;
@@ -51,7 +51,7 @@ input,textarea{
   transition:border-color .2s,box-shadow .2s;
 }
 input:focus,textarea:focus{
-  border-color:#3b82f6;
+  border-color:#005f73;
   box-shadow:0 0 0 3px rgba(59,130,246,.2);
   outline:none;
 }
@@ -65,14 +65,14 @@ button{
   font-size:1.05rem;
   border:0;
   border-radius:12px;
-  background:#3b82f6;
+  background:#005f73;
   color:#ffffff;
   font-weight:600;
   cursor:pointer;
   box-shadow:0 4px 14px rgba(59,130,246,.35);
   transition:background .2s,transform .15s;
 }
-button:hover{background:#2563eb}
+button:hover{background:#0a9396}
 button:active{transform:translateY(1px)}
 button:disabled{
   opacity:.6;
