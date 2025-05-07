@@ -1,4 +1,4 @@
-/* engagement.js – Assistant IA : Taux d'engagement IG (v6 UX – Bento Design) */
+/* engagement.js – Assistant IA : Taux d'engagement IG (v7 UX – Bento Design) */
 (function () {
   const WORKER_URL = 'https://generator.hello-6ce.workers.dev';  // ← adapte
   const ROOT_ID    = 'engagement-ai';
@@ -97,14 +97,17 @@ button:disabled{opacity:0.6;cursor:default;box-shadow:none}
 .cell-followers,
 .cell-likes,
 .cell-comments {
-  background: #fff7d6; /* jaune pastel */
+  background: #90e0ef; /* bleu pastel */
   padding: 1rem;
   border-radius: 12px;
-  text-align: center;
   box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+  display: flex;
+  flex-direction: column;
 }
 .cell-photo {
   grid-column: 1;
+  align-items: center;
+  text-align: center;
 }
 .cell-photo img {
   width:72px;
@@ -113,36 +116,36 @@ button:disabled{opacity:0.6;cursor:default;box-shadow:none}
   margin-bottom:0.5rem;
 }
 .cell-photo .username {
-  display:block;
-  font-size:14px;
+  font-size:16px;
   font-weight:600;
   color:#1e293b;
 }
 .cell-followers {
   grid-column: 2;
+  justify-content: space-between;
 }
 .cell-followers .label,
 .cell-likes .label,
 .cell-comments .label {
-  display: block;
-  font-size: 14px;
-  font-weight: normal;
-  color: #334155;
-  margin-bottom: 0.25rem;
+  font-size:16px;
+  font-weight:normal;
+  color:#334155;
 }
 .cell-followers .value,
 .cell-likes .value,
 .cell-comments .value {
-  display: block;
-  font-size: 18px;
-  font-weight: 700;
-  color: #0f172a;
+  font-size:22px;
+  font-weight:700;
+  color:#0f172a;
+  margin: auto 0;
 }
 .cell-likes {
   grid-column: 1;
+  justify-content: space-between;
 }
 .cell-comments {
   grid-column: 2;
+  justify-content: space-between;
 }
 .cell-engagement {
   grid-column: 1 / -1;
@@ -153,17 +156,15 @@ button:disabled{opacity:0.6;cursor:default;box-shadow:none}
   text-align:center;
 }
 .cell-engagement .label {
-  display: block;
-  font-size: 14px;
-  font-weight: normal;
-  color: #334155;
-  margin-bottom: 0.5rem;
+  font-size:16px;
+  font-weight:normal;
+  color:#334155;
+  margin-bottom:0.5rem;
 }
 .cell-engagement .value {
-  display: block;
-  font-size: 18px;
-  font-weight: 700;
-  color: #0f172a;
+  font-size:22px;
+  font-weight:700;
+  color:#0f172a;
 }
 `;
   injectCSS(CSS);
