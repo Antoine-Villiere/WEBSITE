@@ -1,4 +1,4 @@
-/* engagement.js – Assistant IA : Taux d'engagement IG (v5 UX – Bento Design) */
+/* engagement.js – Assistant IA : Taux d'engagement IG (v6 UX – Bento Design) */
 (function () {
   const WORKER_URL = 'https://generator.hello-6ce.workers.dev';  // ← adapte
   const ROOT_ID    = 'engagement-ai';
@@ -26,13 +26,13 @@
 #${ROOT_ID} .subtitle{
   margin:0 0 1.5rem;
   text-align:center;
-  font-size:.95rem;
+  font-size:0.95rem;
   color:#4b5563;
 }
 label{
   display:block;
   margin-top:1.1rem;
-  font-size:.9rem;
+  font-size:0.9rem;
   color:#374151;
 }
 label.required::after{
@@ -42,22 +42,22 @@ label.required::after{
 }
 input{
   width:100%;
-  padding:.6rem .75rem;
-  margin-top:.4rem;
+  padding:0.6rem 0.75rem;
+  margin-top:0.4rem;
   border:1px solid #d1d5db;
   border-radius:10px;
   font:inherit;
-  transition:border-color .2s,box-shadow .2s;
+  transition:border-color 0.2s,box-shadow 0.2s;
 }
 input:focus{
   border-color:#005f73;
-  box-shadow:0 0 0 3px rgba(59,130,246,.2);
+  box-shadow:0 0 0 3px rgba(59,130,246,0.2);
   outline:none;
 }
 button{
   margin-top:2rem;
   width:100%;
-  padding:.85rem 1.2rem;
+  padding:0.85rem 1.2rem;
   font-size:1.05rem;
   border:0;
   border-radius:12px;
@@ -65,12 +65,12 @@ button{
   color:#fff;
   font-weight:600;
   cursor:pointer;
-  box-shadow:0 4px 14px rgba(59,130,246,.35);
-  transition:background .2s,transform .15s;
+  box-shadow:0 4px 14px rgba(59,130,246,0.35);
+  transition:background 0.2s,transform 0.15s;
 }
 button:hover{background:#0a9396}
 button:active{transform:translateY(1px)}
-button:disabled{opacity:.6;cursor:default;box-shadow:none}
+button:disabled{opacity:0.6;cursor:default;box-shadow:none}
 .loader,.error{
   text-align:center;
   margin-top:1.6rem;
@@ -93,13 +93,18 @@ button:disabled{opacity:.6;cursor:default;box-shadow:none}
   grid-auto-rows: min-content;
   gap: 1rem;
 }
-.cell-photo {
-  grid-column: 1;
-  background: #e0f7fa;
+.cell-photo,
+.cell-followers,
+.cell-likes,
+.cell-comments {
+  background: #fff7d6; /* jaune pastel */
   padding: 1rem;
   border-radius: 12px;
   text-align: center;
   box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+}
+.cell-photo {
+  grid-column: 1;
 }
 .cell-photo img {
   width:72px;
@@ -109,85 +114,56 @@ button:disabled{opacity:.6;cursor:default;box-shadow:none}
 }
 .cell-photo .username {
   display:block;
-  font-size:1.1rem;
+  font-size:14px;
   font-weight:600;
   color:#1e293b;
 }
 .cell-followers {
-  grid-column:2;
-  background:#fff7e6;
-  padding:1rem;
-  border-radius:12px;
-  box-shadow:0 4px 12px rgba(0,0,0,0.03);
-  text-align:center;
+  grid-column: 2;
 }
-.cell-followers .label {
-  font-size:0.9rem;
-  font-weight:600;
-  color:#334155;
+.cell-followers .label,
+.cell-likes .label,
+.cell-comments .label {
+  display: block;
+  font-size: 14px;
+  font-weight: normal;
+  color: #334155;
+  margin-bottom: 0.25rem;
 }
-.cell-followers .value {
-  font-size:1.25rem;
-  font-weight:700;
-  color:#0f172a;
-  margin-top:0.25rem;
+.cell-followers .value,
+.cell-likes .value,
+.cell-comments .value {
+  display: block;
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
 }
 .cell-likes {
-  grid-column:1;
-  background:#e6f7e6;
-  padding:1rem;
-  border-radius:12px;
-  box-shadow:0 4px 12px rgba(0,0,0,0.03);
-  text-align:center;
-}
-.cell-likes .label {
-  font-size:0.9rem;
-  font-weight:600;
-  color:#334155;
-}
-.cell-likes .value {
-  font-size:1.25rem;
-  font-weight:700;
-  color:#0f172a;
-  margin-top:0.25rem;
+  grid-column: 1;
 }
 .cell-comments {
-  grid-column:2;
-  background:#f6e6fa;
-  padding:1rem;
-  border-radius:12px;
-  box-shadow:0 4px 12px rgba(0,0,0,0.03);
-  text-align:center;
-}
-.cell-comments .label {
-  font-size:0.9rem;
-  font-weight:600;
-  color:#334155;
-}
-.cell-comments .value {
-  font-size:1.25rem;
-  font-weight:700;
-  color:#0f172a;
-  margin-top:0.25rem;
+  grid-column: 2;
 }
 .cell-engagement {
-  grid-column:1 / -1;
-  background:#e6eaf7;
-  padding:1rem;
+  grid-column: 1 / -1;
+  background: #f3f4f6; /* gris pastel */
+  padding: 1rem;
   border-radius:12px;
   box-shadow:0 4px 12px rgba(0,0,0,0.03);
   text-align:center;
 }
 .cell-engagement .label {
-  font-size:1rem;
-  font-weight:600;
-  color:#334155;
+  display: block;
+  font-size: 14px;
+  font-weight: normal;
+  color: #334155;
+  margin-bottom: 0.5rem;
 }
 .cell-engagement .value {
-  font-size:1.5rem;
-  font-weight:700;
-  color:#0f172a;
-  margin-top:0.5rem;
+  display: block;
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
 }
 `;
   injectCSS(CSS);
@@ -219,19 +195,13 @@ button:disabled{opacity:.6;cursor:default;box-shadow:none}
   form.addEventListener('submit', async evt => {
     evt.preventDefault();
     const payload = { choice: 'engagement' };
-    new FormData(form).forEach((v, k) => {
-      if (typeof v === 'string' && v.trim()) payload[k] = v.trim();
-    });
+    new FormData(form).forEach((v, k) => { if (typeof v === 'string' && v.trim()) payload[k] = v.trim(); });
 
     out.innerHTML = '<p class="loader">⏳ Calcul en cours…</p>';
     btn.disabled = true;
 
     try {
-      const res = await fetch(`${WORKER_URL}/generate`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
+      const res = await fetch(`${WORKER_URL}/generate`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
       if (!res.ok) throw new Error('HTTP ' + res.status);
 
       const { result } = await res.json();
@@ -252,7 +222,7 @@ button:disabled{opacity:.6;cursor:default;box-shadow:none}
     return `
       <div class="stats-group">
         <div class="stats-header">
-          ⚠️ Attention : l’influenceur peut volontairement masquer certaines statistiques, ce qui peut fausser les chiffres ci-dessous.
+          ⚠️ Attention : <em>${data.username}</em> peut volontairement masquer certaines statistiques, ce qui peut fausser les chiffres ci-dessous.
         </div>
         <div class="bento-grid">
           <div class="cell-photo">
