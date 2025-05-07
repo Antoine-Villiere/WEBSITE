@@ -102,8 +102,8 @@ button:disabled{opacity:.6;cursor:default;box-shadow:none}
     <h1>Calculez votre taux d'engagement Instagram en moins de 10 secondes.</h1>
     <p class="subtitle">Analysez jusqu'à 50 de vos derniers posts pour obtenir vos stats.</p>
     <form id="${ROOT_ID}-form">
-      <label class="required">Quel est votre @username Instagram ?
-        <input name="username" placeholder="@nom_du_compte" autocomplete="username" required>
+      <label class="required">Quel est le @username Instagram ?
+        <input name="instagram" placeholder="@nom_du_compte" autocomplete="instagram" required>
       </label>
       <label class="required">Nombre de posts à analyser
         <input name="posts" type="number" min="10" max="50" placeholder="Ex. : 18" value="18" required>
@@ -116,7 +116,7 @@ button:disabled{opacity:.6;cursor:default;box-shadow:none}
   const form = document.getElementById(`${ROOT_ID}-form`);
   const btn  = document.getElementById(`${ROOT_ID}-btn`);
   const out  = document.getElementById(`${ROOT_ID}-out`);
-  form.querySelector('input[name="username"]').focus();
+  form.querySelector('input[name="instagram"]').focus();
 
   form.addEventListener('submit', async evt => {
     evt.preventDefault();
