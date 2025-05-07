@@ -1,4 +1,4 @@
-/* engagement.js – Assistant IA : Taux d'engagement IG (v3 UX – cohérent description.js) */
+/* engagement.js – Assistant IA : Taux d'engagement IG (v3 UX – cohérent description.js) */
 (function () {
   const WORKER_URL = 'https://generator.hello-6ce.workers.dev';  // ← adapte
   const ROOT_ID    = 'engagement-ai';
@@ -99,14 +99,14 @@ button:disabled{opacity:.6;cursor:default;box-shadow:none}
   if (!root) { console.error(`#${ROOT_ID} introuvable`); return; }
 
   root.innerHTML = `
-    <h1>Calculez votre taux d'engagement Instagram en moins de 10 secondes.</h1>
+    <h1>Calculez votre taux d'engagement Instagram en moins de 10 secondes.</h1>
     <p class="subtitle">Analysez jusqu'à 50 de vos derniers posts pour obtenir vos stats.</p>
     <form id="${ROOT_ID}-form">
-      <label class="required">Quel est le @username Instagram ?
+      <label class="required">Quel est le @username Instagram ?
         <input name="instagram" placeholder="@nom_du_compte" autocomplete="instagram" required>
       </label>
       <label class="required">Nombre de posts à analyser
-        <input name="posts" type="number" min="10" max="50" placeholder="Ex. : 18" value="18" required>
+        <input name="posts" type="number" min="10" max="50" placeholder="Ex. : 18" value="18" required>
       </label>
       <button id="${ROOT_ID}-btn" type="submit">🔍 Calculer l'engagement</button>
     </form>
@@ -135,18 +135,22 @@ button:disabled{opacity:.6;cursor:default;box-shadow:none}
         body: JSON.stringify(payload)
       });
       if (!res.ok) throw new Error('HTTP ' + res.status);
+
+      // Correction : selon la réponse, result peut être un tableau de chaînes ou déjà un objet
       const { result } = await res.json();
-      // Le worker renvoie un array à un seul élément contenant l'objet JSON
-      const data = JSON.parse(result[0]);
+      const data = Array.isArray(result)
+        ? JSON.parse(result[0])
+        : result;
+
       out.innerHTML = renderCard(data);
 
-      /* --- transformer le bouton en call‑to‑action d'inscription --- */
+      /* --- transformer le bouton en call-to-action d'inscription --- */
       btn.textContent = '🚀 Inscrivez-vous gratuitement sur Spottedge';
       btn.disabled    = false;
       btn.type        = 'button';
       btn.onclick     = () => window.open(SIGNUP_URL, '_blank');
     } catch (err) {
-      out.innerHTML = `<p class="error">Erreur : ${err.message}</p>`;
+      out.innerHTML = `<p class="error">Erreur : ${err.message}</p>`;
       btn.disabled = false;
     }
   });
@@ -155,14 +159,14 @@ button:disabled{opacity:.6;cursor:default;box-shadow:none}
   function renderCard(data) {
     return `
       <div class="engagement-card">
-        <img src="${data.profile_pic_url}" alt="Avatar de ${data.full_name}">
+        <img src="${data.profilePic}" alt="Avatar de ${data.full_name}">
         <div class="engagement-text">
           <strong>${data.full_name}</strong> <span>(${data.username})</span><br/>
-          <strong>Followers :</strong> ${Number(data.followers).toLocaleString()}<br/>
-          <strong>Posts analysés :</strong> ${data.posts_analyzed}<br/>
-          <strong>Likes moyens :</strong> ${Number(data.average_likes).toFixed(1)}<br/>
-          <strong>Commentaires moyens :</strong> ${Number(data.average_comments).toFixed(1)}<br/>
-          <strong>Taux d'engagement :</strong> ${Number(data.engagement_rate_percent).toFixed(2)} %
+          <strong>Followers :</strong> ${Number(data.followers).toLocaleString()}<br/>
+          <strong>Posts analysés :</strong> ${data.posts_analyzed}<br/>
+          <strong>Likes moyens :</strong> ${Number(data.avg_likes).toFixed(1)}<br/>
+          <strong>Commentaires moyens :</strong> ${Number(data.avg_comments).toFixed(1)}<br/>
+          <strong>Taux d'engagement :</strong> ${Number(data.engagement_rate_percent).toFixed(2)} %
         </div>
       </div>`;
   }
