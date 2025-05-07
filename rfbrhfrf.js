@@ -1,4 +1,4 @@
-/* engagement.js – Assistant IA : Taux d'engagement IG (v4 UX) */
+/* engagement.js – Assistant IA : Taux d'engagement IG (v5 UX – Bento Design) */
 (function () {
   const WORKER_URL = 'https://generator.hello-6ce.workers.dev';  // ← adapte
   const ROOT_ID    = 'engagement-ai';
@@ -54,7 +54,20 @@ input:focus{
   box-shadow:0 0 0 3px rgba(59,130,246,.2);
   outline:none;
 }
-button{margin-top:2rem;width:100%;padding:.85rem 1.2rem;font-size:1.05rem;border:0;border-radius:12px;background:#005f73;color:#fff;font-weight:600;cursor:pointer;box-shadow:0 4px 14px rgba(59,130,246,.35);transition:background .2s,transform .15s}
+button{
+  margin-top:2rem;
+  width:100%;
+  padding:.85rem 1.2rem;
+  font-size:1.05rem;
+  border:0;
+  border-radius:12px;
+  background:#005f73;
+  color:#fff;
+  font-weight:600;
+  cursor:pointer;
+  box-shadow:0 4px 14px rgba(59,130,246,.35);
+  transition:background .2s,transform .15s;
+}
 button:hover{background:#0a9396}
 button:active{transform:translateY(1px)}
 button:disabled{opacity:.6;cursor:default;box-shadow:none}
@@ -70,80 +83,118 @@ button:disabled{opacity:.6;cursor:default;box-shadow:none}
   font-weight:600;
 }
 
-/* Styles modernisés pour les stats */
+/* Bento Design pour les stats */
 .stats-group {
   margin-top: 2rem;
 }
-.stats-header {
-  background: #fff4e6;
-  border-left: 4px solid #fb923c;
-  padding: 1rem 1.25rem;
-  border-radius: 10px;
-  font-size: 0.9rem;
-  color: #78350f;
-  font-weight: 500;
-  line-height: 1.4;
-  margin-bottom: 1.5rem;
-}
-.engagement-card {
+.bento-grid {
   display: grid;
-  grid-template-columns: 80px 1fr;
-  gap: 1.25rem;
-  align-items: center;
-  padding: 1.5rem;
-  border-radius: 16px;
-  background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
-  transition: transform 0.2s, box-shadow 0.2s;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: min-content;
+  gap: 1rem;
 }
-.engagement-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+.cell-photo {
+  grid-column: 1;
+  background: #e0f7fa;
+  padding: 1rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
 }
-.engagement-card img {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid #ffffff;
+.cell-photo img {
+  width:72px;
+  height:72px;
+  border-radius:50%;
+  margin-bottom:0.5rem;
 }
-.engagement-text {
-  font-family: Inter, system-ui;
-  color: #1e293b;
+.cell-photo .username {
+  display:block;
+  font-size:1.1rem;
+  font-weight:600;
+  color:#1e293b;
 }
-.engagement-text .username {
-  display: block;
-  font-size: 1.25rem;
-  font-weight: 700;
-  margin-bottom: 0.75rem;
-  color: #0f172a;
+.cell-followers {
+  grid-column:2;
+  background:#fff7e6;
+  padding:1rem;
+  border-radius:12px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.03);
+  text-align:center;
 }
-.engagement-text .stat {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 0.5rem;
-  font-size: 0.95rem;
+.cell-followers .label {
+  font-size:0.9rem;
+  font-weight:600;
+  color:#334155;
 }
-.engagement-text .stat:last-child {
-  margin-bottom: 0;
+.cell-followers .value {
+  font-size:1.25rem;
+  font-weight:700;
+  color:#0f172a;
+  margin-top:0.25rem;
 }
-.engagement-text .stat .label {
-  font-weight: 600;
-  color: #334155;
+.cell-likes {
+  grid-column:1;
+  background:#e6f7e6;
+  padding:1rem;
+  border-radius:12px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.03);
+  text-align:center;
 }
-.engagement-text .stat .value {
-  font-weight: 500;
-  color: #0f172a;
+.cell-likes .label {
+  font-size:0.9rem;
+  font-weight:600;
+  color:#334155;
+}
+.cell-likes .value {
+  font-size:1.25rem;
+  font-weight:700;
+  color:#0f172a;
+  margin-top:0.25rem;
+}
+.cell-comments {
+  grid-column:2;
+  background:#f6e6fa;
+  padding:1rem;
+  border-radius:12px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.03);
+  text-align:center;
+}
+.cell-comments .label {
+  font-size:0.9rem;
+  font-weight:600;
+  color:#334155;
+}
+.cell-comments .value {
+  font-size:1.25rem;
+  font-weight:700;
+  color:#0f172a;
+  margin-top:0.25rem;
+}
+.cell-engagement {
+  grid-column:1 / -1;
+  background:#e6eaf7;
+  padding:1rem;
+  border-radius:12px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.03);
+  text-align:center;
+}
+.cell-engagement .label {
+  font-size:1rem;
+  font-weight:600;
+  color:#334155;
+}
+.cell-engagement .value {
+  font-size:1.5rem;
+  font-weight:700;
+  color:#0f172a;
+  margin-top:0.5rem;
 }
 `;
   injectCSS(CSS);
 
   /* ---------- UI ---------- */
   const root = document.getElementById(ROOT_ID);
-  if (!root) {
-    console.error(`#${ROOT_ID} introuvable`);
-    return;
-  }
+  if (!root) { console.error(`#${ROOT_ID} introuvable`); return; }
 
   root.innerHTML = `
     <h1>Calculez votre taux d'engagement Instagram en moins de 10 secondes.</h1>
@@ -184,12 +235,8 @@ button:disabled{opacity:.6;cursor:default;box-shadow:none}
       if (!res.ok) throw new Error('HTTP ' + res.status);
 
       const { result } = await res.json();
-      const data = Array.isArray(result)
-        ? JSON.parse(result[0])
-        : result;
-
+      const data = Array.isArray(result) ? JSON.parse(result[0]) : result;
       out.innerHTML = renderCard(data);
-
       btn.textContent = '🚀 Inscrivez-vous gratuitement sur Spottedge';
       btn.disabled    = false;
       btn.type        = 'button';
@@ -207,30 +254,26 @@ button:disabled{opacity:.6;cursor:default;box-shadow:none}
         <div class="stats-header">
           ⚠️ Attention : l’influenceur peut volontairement masquer certaines statistiques, ce qui peut fausser les chiffres ci-dessous.
         </div>
-        <div class="engagement-card">
-          <img src="${data.profilePic}" alt="Avatar de ${data.full_name}">
-          <div class="engagement-text">
+        <div class="bento-grid">
+          <div class="cell-photo">
+            <img src="${data.profilePic}" alt="Avatar de ${data.full_name}">
             <span class="username">${data.username}</span>
-            <div class="stat">
-              <span class="label">Followers</span>
-              <span class="value">${Number(data.followers).toLocaleString()}</span>
-            </div>
-            <div class="stat">
-              <span class="label">Posts analysés</span>
-              <span class="value">${data.posts_analyzed}</span>
-            </div>
-            <div class="stat">
-              <span class="label">Likes moyens</span>
-              <span class="value">${Number(data.avg_likes).toFixed(1)}</span>
-            </div>
-            <div class="stat">
-              <span class="label">Commentaires moyens</span>
-              <span class="value">${Number(data.avg_comments).toFixed(1)}</span>
-            </div>
-            <div class="stat">
-              <span class="label">Taux d’engagement</span>
-              <span class="value">${Number(data.engagement_rate_percent).toFixed(2)} %</span>
-            </div>
+          </div>
+          <div class="cell-followers">
+            <span class="label">Followers</span>
+            <span class="value">${Number(data.followers).toLocaleString()}</span>
+          </div>
+          <div class="cell-likes">
+            <span class="label">Likes moyens</span>
+            <span class="value">${Number(data.avg_likes).toFixed(1)}</span>
+          </div>
+          <div class="cell-comments">
+            <span class="label">Commentaires moyens</span>
+            <span class="value">${Number(data.avg_comments).toFixed(1)}</span>
+          </div>
+          <div class="cell-engagement">
+            <span class="label">Taux d’engagement sur les ${data.posts_analyzed} derniers posts</span>
+            <span class="value">${Number(data.engagement_rate_percent).toFixed(2)} %</span>
           </div>
         </div>
       </div>`;
