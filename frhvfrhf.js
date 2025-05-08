@@ -5,18 +5,8 @@
 
   /* ---------- THEME ---------- */
   const CSS = `
-:root {
-  --font-family: 'Inter', system-ui;
-  --bg-card: rgba(255, 255, 255, 0.6);
-  --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.05);
-  --accent-primary: #ff7e5f;
-  --accent-secondary: #2b2d42;
-  --text-primary: #2b2d42;
-  --text-secondary: #6b7280;
-}
-
 #${ROOT_ID} {
-  font-family: var(--font-family);
+  font-family: 'Inter', system-ui;
   background: #f8fafc;
   padding: 2rem 1rem 2.5rem;
   max-width: 680px;
@@ -30,21 +20,21 @@
   font-size: 2rem;
   font-weight: 800;
   text-align: center;
-  color: var(--accent-primary);
+  color: #ff7e5f;
 }
 
 #${ROOT_ID} .subtitle {
   margin-bottom: 2rem;
   text-align: center;
   font-size: 1rem;
-  color: var(--text-secondary);
+  color: #6b7280;
 }
 
 label {
   display: block;
   margin-top: 1.2rem;
   font-size: 0.95rem;
-  color: var(--text-primary);
+  color: #2b2d42;
 }
 
 label.required::after {
@@ -103,7 +93,7 @@ button:disabled {
 .loader, .error {
   text-align: center;
   margin-top: 1.8rem;
-  color: var(--text-secondary);
+  color: #6b7280;
 }
 
 .error {
@@ -118,16 +108,19 @@ button:disabled {
 
 .bento-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-areas:
+    "photo followers likes"
+    "comments engagement engagement";
   gap: 1.5rem;
 }
 
 .bento-grid .cell {
-  background: var(--bg-card);
+  background: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(10px);
   padding: 1.25rem;
   border-radius: 20px;
-  box-shadow: var(--shadow-card);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
   transition: transform 0.3s;
@@ -138,6 +131,7 @@ button:disabled {
 }
 
 .cell-photo {
+  grid-area: photo;
   align-items: center;
   text-align: center;
 }
@@ -153,10 +147,21 @@ button:disabled {
 .cell-photo .username {
   font-size: 1.125rem;
   font-weight: 700;
-  color: var(--accent-secondary);
+  color: #2b2d42;
 }
 
-.cell-followers, .cell-likes, .cell-comments {
+.cell-followers {
+  grid-area: followers;
+  justify-content: space-between;
+}
+
+.cell-likes {
+  grid-area: likes;
+  justify-content: space-between;
+}
+
+.cell-comments {
+  grid-area: comments;
   justify-content: space-between;
 }
 
@@ -164,7 +169,7 @@ button:disabled {
 .cell-likes .label,
 .cell-comments .label {
   font-size: 1rem;
-  color: var(--text-secondary);
+  color: #6b7280;
 }
 
 .cell-followers .value,
@@ -172,29 +177,29 @@ button:disabled {
 .cell-comments .value {
   font-size: 1.5rem;
   font-weight: 800;
-  color: var(--text-primary);
+  color: #2b2d42;
 }
 
 .cell-engagement {
-  grid-column: 1 / -1;
-  background: var(--bg-card);
+  grid-area: engagement;
+  background: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(12px);
   padding: 1.5rem;
   border-radius: 20px;
-  box-shadow: var(--shadow-card);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
   text-align: center;
 }
 
 .cell-engagement .label {
   font-size: 1rem;
   margin-bottom: 0.75rem;
-  color: var(--text-secondary);
+  color: #6b7280;
 }
 
 .cell-engagement .value {
   font-size: 1.75rem;
   font-weight: 800;
-  color: var(--accent-primary);
+  color: #ff7e5f;
 }
 `;
   injectCSS(CSS);

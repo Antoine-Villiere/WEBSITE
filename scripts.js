@@ -48,7 +48,7 @@ for (var i = 0; i < frameItems.length; i++) {
   })(frameItems[i]);
 }
 </script>
-<script src="https://cdn.jsdelivr.net/gh/Antoine-Villiere/WEBSITE@main/frfrzfr.js" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/Antoine-Villiere/WEBSITE@main/frhvfrhf.js" defer></script>
 <script src="https://cdn.jsdelivr.net/gh/Antoine-Villiere/WEBSITE@main/description.js" defer></script>
 <script src="https://cdn.jsdelivr.net/gh/Antoine-Villiere/WEBSITE@main/hook.js" defer></script>
 <script src="https://cdn.jsdelivr.net/gh/Antoine-Villiere/WEBSITE@main/ugc-ugc.js" defer></script>
