@@ -223,7 +223,8 @@ button:disabled{opacity:.6;cursor:default;box-shadow:none}
       btn.type        = 'button';
       btn.onclick     = () => window.open(SIGNUP_URL, '_blank');
     } catch (err) {
-      out.innerHTML = `<p class="error">Erreur : ${err.message}</p>`;
+      const user = form.querySelector('input[name="instagram"]').value;
+      out.innerHTML = `<p class="error">Oups, nous n'avons pas d'information pour "${user}" pour le moment. Corriger ou réessayer ultérieurement.</p>`;
       btn.disabled = false;
     }
   });
