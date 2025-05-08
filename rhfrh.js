@@ -6,99 +6,77 @@
   /* ---------- THEME ---------- */
   const CSS = `
 #${ROOT_ID} {
-  font-family: 'Inter', system-ui;
-  background: #f8fafc;
-  padding: 2rem 1rem 2.5rem;
-  max-width: 680px;
-  margin: 2rem auto;
-  border-radius: 24px;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
+  font-family:Inter,system-ui;
+  background:#ffffff;
+  padding:2rem 1rem 2.5rem;
+  max-width:640px;
+  margin:2rem auto;
+  border:1px solid #ececec;
+  border-radius:20px;
+  box-shadow:0 8px 20px rgba(0,0,0,.04);
 }
 
 #${ROOT_ID} h1 {
-  margin-bottom: 0.75rem;
-  font-size: 2rem;
-  font-weight: 800;
-  text-align: center;
-  color: #ff7e5f;
+  margin:0 0 0.5rem;
+  font-size:1.75rem;
+  font-weight:700;
+  text-align:center;
+  color:#ca6702;
 }
 
 #${ROOT_ID} .subtitle {
-  margin-bottom: 2rem;
-  text-align: center;
-  font-size: 1rem;
-  color: #6b7280;
+  margin:0 0 1.5rem;
+  text-align:center;
+  font-size:.95rem;
+  color:#4b5563;
 }
 
 label {
-  display: block;
-  margin-top: 1.2rem;
-  font-size: 0.95rem;
-  color: #2b2d42;
+  display:block;
+  margin-top:1.1rem;
+  font-size:.9rem;
+  color:#374151;
 }
 
 label.required::after {
-  content: '*';
-  color: #e63946;
-  margin-left: 4px;
+  content:'*';
+  color:#dc2626;
+  margin-left:2px;
 }
 
 input {
-  width: 100%;
-  padding: 0.75rem 1rem;
-  margin-top: 0.5rem;
-  border: none;
-  border-radius: 12px;
-  font: inherit;
-  background: #ffffff;
-  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.06);
-  transition: box-shadow 0.2s;
+  width:100%;
+  padding:.6rem .75rem;
+  margin-top:.4rem;
+  border:1px solid #d1d5db;
+  border-radius:10px;
+  font:inherit;
+  resize:vertical;
+  transition:border-color .2s,box-shadow .2s;
 }
 
 input:focus {
-  box-shadow: 0 0 0 3px rgba(255, 126, 95, 0.3);
-  outline: none;
+  border-color:#005f73;
+  box-shadow:0 0 0 3px rgba(59,130,246,.2);
+  outline:none;
 }
 
-button {
-  margin-top: 2.5rem;
-  width: 100%;
-  padding: 1rem 1.5rem;
-  font-size: 1.1rem;
-  border: none;
-  border-radius: 16px;
-  background: linear-gradient(135deg, #ff7e5f, #feb47b);
-  color: #fff;
-  font-weight: 700;
-  cursor: pointer;
-  box-shadow: 0 6px 20px rgba(255, 126, 95, 0.4);
-  transition: transform 0.2s, box-shadow 0.2s;
-}
+button{margin-top:2rem;width:100%;padding:.85rem 1.2rem;font-size:1.05rem;border:0;border-radius:12px;background:#005f73;color:#fff;font-weight:600;cursor:pointer;box-shadow:0 4px 14px rgba(59,130,246,.35);transition:background .2s,transform .15s}
+button{margin-top:2rem;width:100%;padding:.85rem 1.2rem;font-size:1.05rem;border:0;border-radius:12px;background:#005f73;color:#fff;font-weight:600;cursor:pointer;box-shadow:0 4px 14px rgba(59,130,246,.35);transition:background .2s,transform .15s}
+button:hover{background:#0a9396}
+button:active{transform:translateY(1px)}
+button:disabled{opacity:.6;cursor:default;box-shadow:none}
 
-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(255, 126, 95, 0.5);
+.loader,.error{
+  text-align:center;
+  margin-top:1.6rem;
+  font-style:italic;
+  color:#6b7280;
 }
-
-button:active {
-  transform: translateY(1px);
-}
-
-button:disabled {
-  opacity: 0.6;
-  cursor: default;
-  box-shadow: none;
-}
-
-.loader, .error {
-  text-align: center;
-  margin-top: 1.8rem;
-  color: #6b7280;
-}
-
-.error {
-  color: #e63946;
-  font-weight: 600;
+.error{
+  color:#dc2626;
+  font-style:normal;
+  font-weight:600;
 }
 
 /* ---------- Modern Stats Group ---------- */
