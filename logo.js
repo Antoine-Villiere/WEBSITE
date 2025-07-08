@@ -1,7 +1,7 @@
 // Importe la fonction pour créer un client Supabase.
 // Assurez-vous que votre projet est configuré pour gérer les modules ES (type="module" dans la balise script de votre HTML).
 import {createClient} from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
-// --- CONFIGURATION ---
+// --- CONFIGURATION --- 
 // Remplacez par vos propres informations Supabase.
 const SUPABASE_URL = 'https://zfhymdqdybuitsrzjmrb.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmaHltZHFkeWJ1aXRzcnpqbXJiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjY1MDIxMDcsImV4cCI6MjA0MjA3ODEwN30.eNKiRZMPCNzj41jYjol4claYdbzU8QykpezH072E8xo';
