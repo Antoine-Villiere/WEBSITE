@@ -3,12 +3,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const SUPABASE_URL = 'https://zfhymdqdybuitsrzjmrb.supabase.co';
   const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpmaHltZHFkeWJ1aXRzcnpqbXJiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjY1MDIxMDcsImV4cCI6MjA0MjA3ODEwN30.eNKiRZMPCNzj41jYjol4claYdbzU8QykpezH072E8xo';
-
-
   const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  // Place ici ta fonction loadPartnerLogos (à l'intérieur de ce bloc ou définie plus haut)
-  // ou appelle-la ici si elle est déjà définie
   loadPartnerLogos(supabase);
 });
 
